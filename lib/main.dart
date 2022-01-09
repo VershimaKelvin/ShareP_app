@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final myController =TextEditingController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,6 +31,7 @@ class _MyAppState extends State<MyApp> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextFormField(
+                  controller: myController,
                   decoration: const InputDecoration(
                     hintText: 'Enter notes',
                   ),
@@ -40,9 +44,11 @@ class _MyAppState extends State<MyApp> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 100),
                 color: Colors.blue,
-                child: const FlatButton(
-                    onPressed: null,
-                    child: Text(
+                child:  FlatButton(
+                    onPressed: (){
+                      saveNotes(myController.text);
+                    },
+                    child: const Text(
                         'Save',
                     style: TextStyle(
                       color: Colors.white
@@ -52,9 +58,11 @@ class _MyAppState extends State<MyApp> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 100),
                 color: Colors.blue,
-                child: const FlatButton(
-                  onPressed: null,
-                  child: Text(
+                child:FlatButton(
+                  onPressed: (){
+                    Navigator.push(context, route)
+                  },
+                  child: const Text(
                     'View Notes',
                     style: TextStyle(
                         color: Colors.white
@@ -66,5 +74,10 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  saveNotes(String notes)async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+   await prefs.setString('noteData', notes);
   }
 }
