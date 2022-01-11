@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final myController =TextEditingController();
+  final secondController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +42,26 @@ class _MyAppState extends State<MyApp> {
                   cursorColor: Colors.blue,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextFormField(
+                  controller: secondController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter second notes',
+                  ),
+                  textAlign: TextAlign.start,
+                  showCursor: true,
+                  autofocus: true,
+                  cursorColor: Colors.blue,
+                ),
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 100),
                 color: Colors.blue,
                 child:  FlatButton(
                     onPressed: (){
-                      saveNotes(myController.text);
+                      saveNotes(myController.text,secondController.text);
+
                     },
                     child: const Text(
                         'Save',
@@ -55,6 +70,7 @@ class _MyAppState extends State<MyApp> {
                     ),),
                 ),
               ),
+
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 100),
                 color: Colors.blue,
@@ -80,8 +96,9 @@ class _MyAppState extends State<MyApp> {
 
   }
 
-  saveNotes(String notes)async {
+  saveNotes(String notes,String notes2)async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
    await prefs.setString('noteData', notes);
+    await prefs.setString('noteData2', notes2);
   }
 }

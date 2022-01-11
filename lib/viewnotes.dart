@@ -10,6 +10,7 @@ class ViewNotes extends StatefulWidget {
 
 class _ViewNotesState extends State<ViewNotes> {
    String? text;
+   String? text2;
 
 
   @override
@@ -23,8 +24,17 @@ class _ViewNotesState extends State<ViewNotes> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: Center(
-          child: text == null? const Text('No text available'): Text(text!),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+              child: text == null? const Text('No text available'): Text(text!),
+          ),
+          Center(
+            child: text2 == null? const Text('No text available'): Text(text2!),
+          ),
+        ],
       ),
     );
   }
@@ -34,6 +44,8 @@ class _ViewNotesState extends State<ViewNotes> {
   getPreference()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
    text= prefs.getString('noteData')!;
+    text2= prefs.getString('noteData2')!;
+
    setState(() {
 
    });
