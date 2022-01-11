@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sharedprefrences/viewnotes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(home:  MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -17,8 +18,7 @@ class _MyAppState extends State<MyApp> {
   final myController =TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: const Text('ShareP-app'),
@@ -58,22 +58,26 @@ class _MyAppState extends State<MyApp> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 100),
                 color: Colors.blue,
-                child:FlatButton(
-                  onPressed: (){
-                    Navigator.push(context, route)
+                child:GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const ViewNotes()));
                   },
-                  child: const Text(
-                    'View Notes',
-                    style: TextStyle(
-                        color: Colors.white
-                    ),),
+                  child: const FlatButton(
+
+                    onPressed: null,
+                    child: Text(
+                      'View Notes',
+                      style: TextStyle(
+                          color: Colors.white
+                      ),),
+                  ),
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
+      );
+
   }
 
   saveNotes(String notes)async {

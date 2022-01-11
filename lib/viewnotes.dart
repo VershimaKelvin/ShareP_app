@@ -9,7 +9,8 @@ class ViewNotes extends StatefulWidget {
 }
 
 class _ViewNotesState extends State<ViewNotes> {
-  late String text;
+   String? text;
+
 
   @override
   void initState() {
@@ -17,12 +18,18 @@ class _ViewNotesState extends State<ViewNotes> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return  Center(
-        child: text == null? const Text('No text availabe'): Text(text),
+    return  Scaffold(
+      body: Center(
+          child: text == null? const Text('No text available'): Text(text!),
+      ),
     );
   }
+
+
 
   getPreference()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -32,4 +39,6 @@ class _ViewNotesState extends State<ViewNotes> {
    });
 
   }
+
+
 }
